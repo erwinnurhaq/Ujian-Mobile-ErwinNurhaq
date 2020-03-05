@@ -1,7 +1,5 @@
 import AsyncStorage from '@react-native-community/async-storage'
-import { LOADING_LOGIN, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, INPUT_TEXT, HIDE_UNHIDE_PASSWORD } from './types'
-import Axios from 'axios'
-import { API_URL } from '../helpers/apiurl'
+import { LOADING_LOGIN, USER_LOGIN_SUCCESS, USER_LOGIN_FAIL, INPUT_TEXT } from './types'
 
 export const onInputText = (prop, value) => {
     return {

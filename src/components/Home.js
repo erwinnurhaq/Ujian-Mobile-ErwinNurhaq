@@ -106,7 +106,7 @@ class Home extends Component {
         </TouchableWithoutFeedback>
     ))
 
-    renderList = () => this.props.homeListPost.listPost.length > 0 ? this.props.homeListPost.listPost.map((post, index) => (
+    renderList = () => !this.props.homeListPost.loading ? this.props.homeListPost.listPost.map((post, index) => (
         <TouchableWithoutFeedback onPress={() => this.onPostPress(post)} key={index}>
             <View style={st.list}>
                 <Image source={{ uri: `${post.restaurant.thumb}` }} style={{ height: 150, flex: 1 }} />

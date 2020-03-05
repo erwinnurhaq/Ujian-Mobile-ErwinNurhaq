@@ -46,7 +46,7 @@ class LoginForm extends Component {
     };
 
     render() {
-        console.log(this.props.user.authChecked, this.props.user.id)
+        console.log(this.props.user.authChecked, this.props.user.username)
         if (this.props.user.authChecked) {
             return (
                 <View style={st.container}>
