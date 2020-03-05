@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 const st = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff'
+        backgroundColor: 'lightgrey'
     },
     headerContainer: {
         backgroundColor: 'tomato',
@@ -22,9 +22,11 @@ const st = StyleSheet.create({
     headerText: {
         color: '#fff', fontSize: 18, fontWeight: '700'
     },
-    postListContainer: {
-        width: '100%',
-        backgroundColor: 'whitesmoke'
+    containerScroll: {
+        flex: 1,
+        backgroundColor: 'lightgrey',
+        justifyContent: 'flex-start',
+        alignItems: 'center'
     },
     top: {
         flex: 1,
@@ -32,9 +34,13 @@ const st = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'flex-start',
-        padding: 10
+        padding: 10,
+        flexWrap: 'wrap',
+        backgroundColor: '#fff'
     },
     iconContainer: {
+        width: '25%',
+        paddingVertical: 5,
         alignItems: "center"
     },
     icon: {
@@ -47,7 +53,7 @@ const st = StyleSheet.create({
         justifyContent: 'center'
     },
     listContainer: {
-        backgroundColor: 'lightgrey',
+
         flexDirection: 'row',
         flexWrap: 'wrap',
         flex: 1,
@@ -62,16 +68,23 @@ const st = StyleSheet.create({
         marginHorizontal: 4,
         borderRadius: 5,
         overflow: 'hidden'
-    },
-    containerScroll: {
-        flex: 1,
-        backgroundColor: '#fff',
-        justifyContent: 'flex-start',
-        alignItems: 'center'
     }
 })
 
 class Home extends Component {
+
+    state = {
+        listTopIcon: [
+            { iconName: 'credit-card', text: 'Credit' },
+            { iconName: 'food-variant', text: 'Variant' },
+            { iconName: 'food-fork-drink', text: 'Recipe' },
+            { iconName: 'map-marker', text: 'Location' },
+            { iconName: 'cart', text: 'Cart' },
+            { iconName: 'pizza', text: 'Pizza' },
+            { iconName: 'hamburger', text: 'Burger' },
+            { iconName: 'dots-horizontal', text: 'More' },
+        ]
+    }
 
     componentDidMount() {
         this.props.getHomeListPost()
@@ -82,7 +95,18 @@ class Home extends Component {
         this.props.navigation.navigate('DetailRestaurant');
     };
 
-    renderList = () => this.props.homeListPost.listPost ? this.props.homeListPost.listPost.map((post, index) => (
+    renderTopIcon = () => this.state.listTopIcon.map(i => (
+        <TouchableWithoutFeedback key={i.text} >
+            <View style={st.iconContainer} >
+                <View style={st.icon}>
+                    <Icon name={i.iconName} type="material-community" size={24} color='tomato' />
+                </View>
+                <Text>{i.text}</Text>
+            </View>
+        </TouchableWithoutFeedback>
+    ))
+
+    renderList = () => this.props.homeListPost.listPost.length > 0 ? this.props.homeListPost.listPost.map((post, index) => (
         <TouchableWithoutFeedback onPress={() => this.onPostPress(post)} key={index}>
             <View style={st.list}>
                 <Image source={{ uri: `${post.restaurant.thumb}` }} style={{ height: 150, flex: 1 }} />
@@ -93,89 +117,28 @@ class Home extends Component {
                 <Text style={{ fontWeight: '700', padding: 10 }}>{post.restaurant.name}</Text>
             </View>
         </TouchableWithoutFeedback>
-    )) : null
+    )) : (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ color: '#fff' }}>Loading...</Text>
+            </View>
+        )
 
     render() {
         return (
             <View style={st.container}>
                 <Header
                     leftComponent={<Icon name='ticket-account' type="material-community" size={24} color='#fff' />}
-                    containerStyle={st.headerContainer}
                     rightContainerStyle={st.headerTextWrapper}
                     rightComponent={{
                         text: `Halo, ${this.props.user.username}`,
                         style: st.headerText
                     }}
+                    containerStyle={st.headerContainer}
                 />
-                <ScrollView>
+                <ScrollView style={{ flex: 1 }}>
                     <View style={st.containerScroll}>
                         <View style={st.top}>
-                            <TouchableWithoutFeedback >
-                                <View style={st.iconContainer} >
-                                    <View style={st.icon}>
-                                        <Icon name='credit-card' type="material-community" size={24} color='tomato' />
-                                    </View>
-                                    <Text>Credit</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback >
-                                <View style={st.iconContainer} >
-                                    <View style={st.icon}>
-                                        <Icon name='food-variant' type="material-community" size={24} color='tomato' />
-                                    </View>
-                                    <Text>Variant</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback >
-                                <View style={st.iconContainer} >
-                                    <View style={st.icon}>
-                                        <Icon name='food-fork-drink' type="material-community" size={24} color='tomato' />
-                                    </View>
-                                    <Text>Recipe</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback >
-                                <View style={st.iconContainer} >
-                                    <View style={st.icon}>
-                                        <Icon name='map-marker' type="material-community" size={24} color='tomato' />
-                                    </View>
-                                    <Text>Location</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                        </View>
-                        <View style={st.top}>
-                            <TouchableWithoutFeedback >
-                                <View style={st.iconContainer} >
-                                    <View style={st.icon}>
-                                        <Icon name='cart' type="material-community" size={24} color='tomato' />
-                                    </View>
-                                    <Text>Cart</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback >
-                                <View style={st.iconContainer} >
-                                    <View style={st.icon}>
-                                        <Icon name='pizza' type="material-community" size={24} color='tomato' />
-                                    </View>
-                                    <Text>Pizza</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback >
-                                <View style={st.iconContainer} >
-                                    <View style={st.icon}>
-                                        <Icon name='hamburger' type="material-community" size={24} color='tomato' />
-                                    </View>
-                                    <Text>Burger</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <TouchableWithoutFeedback>
-                                <View style={st.iconContainer} >
-                                    <View style={st.icon}>
-                                        <Icon name='dots-horizontal' type="material-community" size={24} color='tomato' />
-                                    </View>
-                                    <Text>More</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
+                            {this.renderTopIcon()}
                         </View>
                         <View style={st.listContainer}>
                             {this.renderList()}

@@ -22,7 +22,7 @@ export default ({ navigation }) => {
                     if (route.name === 'HomeNav') {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === 'Setting') {
-                        iconName = focused ? 'account-circle' : 'account-circle-outline';
+                        iconName = focused ? 'cogs' : 'cogs';
                     }
 
                     return <Icon name={iconName} type="material-community" size={35} color={color} />;
